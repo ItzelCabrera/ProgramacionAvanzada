@@ -4,6 +4,9 @@
 #include<sys/types.h>
 #include<sys/wait.h>
 
+/*
+PROGRAMA QUE MEDIANTE TRES FORKS CREA PROCESOS ANIDADOS
+*/
 int main(){
 	pid_t proc;
 	proc = fork();

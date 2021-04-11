@@ -5,8 +5,28 @@
 #include<sys/wait.h>
 
 int main(){
+	FILE *fO, *fI;
+
 	pid_t proc;
-	//FOR I
+	
+	//FOR 2: crea mi arbol correcto
+	for(int i = 0; i<3;i++){
+		proc = fork();
+		if(proc <0){
+			printf("Ocurrio un error");
+		}
+		if (proc == 0){
+			printf("\nSoy el proceso[%i], mi papa es [%i]\n",getpid(),getppid());
+			exit(0);
+		}
+		else{
+			wait(&proc);
+		}
+	}
+	return 0;
+}
+
+/*FOR I
 	for(int i = 0; i<3;i++){
 		proc = fork();
 		if(proc <0){
@@ -20,35 +40,20 @@ int main(){
 			printf("\nSoy el proceso PAPA [%i], mi papa es [%i]\n",getpid(),getppid());
 			
 		}
-	}
-	/*FOR 2
-	for(int i = 0; i<3;i++){
-		proc = fork();
-		if(proc <0){
-			printf("Ocurrio un error");
-		}
-		if (proc == 0){
-			printf("\nSoy el proceso[%i], mi papa es [%i]\n",getpid(),getppid());
-			break;
-		}
-		else{
-			wait(&proc);
-		}
-	}
-	*/
-	/*FOR 3
-	for(int i = 0; i<3;i++){
-		proc = fork();
-		if(proc <0){
-			printf("Ocurrio un error");
-		}
-		if (proc == 0){
-			printf("\nSoy el proceso[%i], mi papa es [%i]\n",getpid(),getppid());
-		}
-		else{
-			break;
-			wait(&proc);
-			}
 	}*/
-	return 0;
-}
+	
+/*FOR 3: crea una lista de procesos 
+	for(int i = 0; i<3;i++){
+		proc = fork();
+		if(proc <0){
+			printf("Ocurrio un error");
+		}
+		if (proc == 0){
+			printf("\nSoy el proceso[%i], mi papa es [%i]\n",getpid(),getppid());
+		}
+		else{
+			wait(&proc);
+			break;
+			
+		}
+	}*/
