@@ -23,6 +23,7 @@ int main(){
 			wait(&proc);
 		}
 	}
+	
 	return 0;
 }
 
