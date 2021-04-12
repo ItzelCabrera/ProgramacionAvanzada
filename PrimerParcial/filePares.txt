@@ -1,4 +1,0 @@
-[2]	{4}	Primer mensaje
-[4]	{2}	Primer mensaje
-[2]	{4}	Primer mensaje
-[4]	{2}	Primer mensaje
