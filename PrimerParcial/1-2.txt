@@ -1,0 +1,4 @@
+P1->P2: escribe por primera vez
+P2->P1: responde
+P2->P1: escribe por primera vez
+P1->P2: escribe por primera vez

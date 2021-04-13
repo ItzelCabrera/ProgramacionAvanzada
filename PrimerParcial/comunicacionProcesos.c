@@ -5,16 +5,18 @@
 #include<sys/types.h>
 #include<sys/wait.h>
 
-void sobreescribir(FILE *fI,char v[], char f[]);
-void anexar(FILE *fI,char v[], char f[]);
+void sobreescribir(FILE *fI,char v[]);
+void anexar(FILE *fI,char v[]);
 void leer(FILE *fO);
 int SIZE  = 4;
 
 int main(){
 
 	FILE *fP,*fI;
+	fP = fopen("3-4.txt","a+");
+	fI = fopen("1-2.txt","a+");
 	FILE *control = fopen("control.txt","w+");
-	if(control == NULL){printf("\nError al intentar abrir archivo");}
+	if((control == NULL) || (fP == NULL) || (fI == NULL)){printf("\nError al intentar abrir archivo");}
 	fprintf(control,"%i %i",0,0);
 	rewind(control);
 	
@@ -49,7 +51,8 @@ int main(){
 					printf("\nP1 escribe por primera vez a P2\n");
 					z = fprintf(control,"%i %i",1,c[1]);
 					rewind(control);
-					printf("\n%i\n",z);
+					//printf("\n%i\n",z);
+					sobreescribir(fI,"P1->P2: escribe por primera vez");
 					break;
 				}
 				else if(c[0] == 1){
@@ -61,7 +64,8 @@ int main(){
 					printf("\nP1 lee mensaje de P2 y responde\n");
 					z = fprintf(control,"%i %i",1,c[1]);
 					rewind(control);
-					printf("\n%i\n",z);
+					//printf("\n%i\n",z);
+					sobreescribir(fI,"P1->P2: responde");
 					break;
 				}	
 			}
@@ -71,7 +75,8 @@ int main(){
 					printf("\nP2 escribe por primera vez a P1\n");
 					z = fprintf(control,"%i %i",2,c[1]);
 					rewind(control);
-					printf("\n%i\n",z);
+					//printf("\n%i\n",z);
+					sobreescribir(fI,"P2->P1: escribe por primera vez");
 					break;
 				}
 				else if(c[0] == 2){
@@ -82,7 +87,8 @@ int main(){
 					printf("\nP2 lee mensaje de P1 y responde\n");
 					z = fprintf(control,"%i %i",2,c[1]);
 					rewind(control);
-					printf("\n%i\n",z);
+					//printf("\n%i\n",z);
+					sobreescribir(fI,"P2->P1: responde");
 					break;
 				}		
 			}
@@ -92,7 +98,8 @@ int main(){
 					printf("\nP3 escribe por primera vez a P4\n");
 					z = fprintf(control,"%i %i",c[0],3);
 					rewind(control);
-					printf("\n%i\n",z);
+					//printf("\n%i\n",z);
+					sobreescribir(fP,"P3->P4: escribe por primera vez");
 					break;
 				}
 				else if(c[1] == 3){
@@ -103,7 +110,8 @@ int main(){
 					printf("\nP3 lee mensaje de P4 y responde\n");
 					z = fprintf(control,"%i %i",c[0],3);
 					rewind(control);
-					printf("\n%i\n",z);
+					//printf("\n%i\n",z);
+					sobreescribir(fP,"P3->P4: responde");
 					break;
 				}		
 			}
@@ -113,7 +121,8 @@ int main(){
 					printf("\nP4 escribe por primera vez a P3\n");
 					z = fprintf(control,"%i %i",c[0],4);
 					rewind(control);
-					printf("\n%i\n",z);
+					//printf("\n%i\n",z);
+					sobreescribir(fP,"P4->P3: escribe por primera vez");
 					break;
 				}
 				else if(c[1] == 4){
@@ -124,35 +133,27 @@ int main(){
 					printf("\nP4 lee mensaje de P3 y responde\n");
 					z = fprintf(control,"%i %i",c[0],4);
 					rewind(control);
-					printf("\n%i\n",z);
+					//printf("\n%i\n",z);
+					sobreescribir(fP,"P4->P3: responde");
 					break;
 				}	
 			}
 		}
 		sleep(3);
 	}
-	
+		
+	fclose(fI);
+	fclose(fP);
+	fclose(control);
 	return 0;
 }
 
 
-void sobreescribir(FILE *fI,char v[],char file[]){
-	fI = fopen(file,"w+");
-	if(fI == NULL){
-		printf("ERROR AL ABRIR ARCHIVOS");
-		exit(1);
-	}
+void sobreescribir(FILE *fI,char v[]){
 	fprintf(fI,"%s\n",v);
-	fclose(fI);
 }
-void anexar(FILE *fI,char v[],char file[]){
-	fI = fopen(file,"a");
-	if(fI == NULL){
-		printf("ERROR AL ABRIR ARCHIVOS");
-		exit(1);
-	}
+void anexar(FILE *fI,char v[]){
 	fprintf(fI,"%s",v);
-	fclose(fI);
 }
 
 void leer(FILE *fO){
