@@ -1,0 +1,77 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<unistd.h>
+#include<stdbool.h>
+#include<string.h>
+#include<sys/types.h>
+#include<sys/wait.h>
+#include<pthread.h>
+
+int resultado = 3;
+int N_THREADS = 4; //numero de hilos
+
+void* funcion(void* argumento);
+void *suma(int res);
+void *resta(int res);
+void *division(int res);
+void *multiplicacion(int res);
+
+int main(){
+	pthread_t id[N_THREADS]; //array de id's
+	void* valor_retorno;
+	for(int j = 0; j<4;j++){
+		if(pthread_create(&id[j],NULL,&funcion,(void*)(intptr_t)j)!=0){
+			printf("\nError al crear el hilo\n");
+			exit(EXIT_FAILURE);
+		}
+		sleep(3);
+	
+	}
+	return 0;
+}
+
+void* funcion(void* i){
+	int hilo = (intptr_t)i;
+	int res = resultado;
+	for(int k = 0; k<10; k++){
+		switch(hilo){
+			case 0:
+				suma(res);
+				break;
+			case 1:
+				resta(res);
+				break;
+			case 2:
+				multiplicacion(res);
+				break;
+			case 3:
+				division(res);
+				break;
+			default:
+				printf("\nError: funcion no encontrada\n");
+				break;
+		}
+	}
+	pthread_exit(NULL);	
+}
+
+void *suma(int res){
+	resultado +=1;
+	printf("\nHilo #%ld => (%d)+1 = %d\n",pthread_self(),res,resultado);
+	
+}
+
+void *resta(int res){
+	resultado -=1;
+	printf("\nHilo #%ld => (%d)-1 = %d\n",pthread_self(),res,resultado);
+}
+
+void *multiplicacion(int res){
+	resultado *=4;
+	printf("\nHilo #%ld => (%d)*4 = %d\n",pthread_self(),res,resultado);
+}
+
+void *division(int res){
+	resultado /=4;
+	printf("\nHilo #%ld => (%d)/4 = %d\n",pthread_self(),res,resultado);
+}
