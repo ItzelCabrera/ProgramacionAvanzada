@@ -62,31 +62,31 @@ int main(){
     if(pthread_join(prod[0],NULL)){
         printf("P0 Problema al esperar a hijo\n");
         exit(EXIT_FAILURE);    
-    }else printf("P0 Termina bien\n");
+    }else printf("Prod 1 Termina \n");
     if(pthread_join(prod[1],NULL)){
         printf("P1 Problema al esperar a hijo\n");
         exit(EXIT_FAILURE);    
-    }else printf("P1 Termina bien\n");
+    }else printf("Prod 2 Termina\n");
     if(pthread_join(prod[2],NULL)){
         printf("P2 Problema al esperar a hijo\n");
         exit(EXIT_FAILURE);    
-    }else printf("P2 Termina bien\n");
+    }else printf("Prod 3 Termina\n");
     if(pthread_join(cons[0],NULL)){
         printf("C0 Problema al esperar a hijo\n");
         exit(EXIT_FAILURE);    
-    }else printf("C0 Termina bien\n");
+    }else printf("Cons 1 Termina\n");
     if(pthread_join(cons[1],NULL)){
         printf("C1 Problema al esperar a hijo\n");
         exit(EXIT_FAILURE);    
-    }else printf("C1 Termina bien\n");
+    }else printf("Cons 2 Termina\n");
     if(pthread_join(cons[2],NULL)){
         printf("C2 Problema al esperar a hijo\n");
         exit(EXIT_FAILURE);    
-    }else printf("C2 Termina bien\n");
+    }else printf("Cons 3 Termina\n");
     if(pthread_join(cons[3],NULL)){
         printf("C3 Problema al esperar a hijo\n");
         exit(EXIT_FAILURE);    
-    }else printf("C3 Termina bien\n");
+    }else printf("Cons 4 Termina\n");
 
     pthread_mutex_destroy(&mutex); /* Destruir */
     pthread_cond_destroy(&lleno);
@@ -101,36 +101,34 @@ void *Productor(void *arg){
 
     while(vP){
         //printf("\t\tENTRA P%ld\n",(intptr_t)arg);
-        dato+=1; //produce un dato
-        //printf("Dato producido: %d\n",dato);
         pthread_mutex_lock(&mutex); //accede al buffer
             if(iP<15){
                 while(n_datos == TAM_BUFFER){ //buffer lleno
-                    printf("[n_datos %d]P[%ld]:Esperando a que se desocupe un lugar\n",n_datos,(intptr_t)arg);
+                    printf("Esperando a que se desocupe un lugar\n");
                     pthread_cond_wait(&lleno,&mutex);
                     if(iP == 15) {
                         break;                    
                     }
                 }
                 if(iP < 15){
-                    buffer[iP % TAM_BUFFER]=dato; //posProductor = i %TAM_BUFFER
-                    printf("El dato colocado es %i en %d por P%ld\n",buffer[iP % TAM_BUFFER],iP % TAM_BUFFER,(intptr_t)arg);
+                    buffer[iP % TAM_BUFFER]=iP; //posProductor = i %TAM_BUFFER
+                    printf("Dato colocado =  %i, pos[%d]; producido por Productor:%ld\n",buffer[iP % TAM_BUFFER],iP % TAM_BUFFER,(intptr_t)arg);
                     n_datos++;//se ocupó un luga del buffer
                     if(n_datos == 1){ //si ya existe por lo menos un dato a consumir
                         printf("Se ha creado un espacio que puede ser consumido!\n");                
                         pthread_cond_signal(&vacio);
                     }
                     iP++; 
-                    printf("IP=%d\n",iP);
+                    //printf("IP=%d\n",iP);
                 }
             }if(iP == 15){
-                pthread_cond_broadcast(&lleno);
+                pthread_cond_broadcast(&lleno);//libera los posibles productores interrumpidos por no haber más espacios disponibles
                 vP = false;
             }
         pthread_mutex_unlock(&mutex); //permite que otro acceda al buffer 
         sleep(1);
     }
-    printf("\tSale P%ld\n",(intptr_t)arg); 
+    //printf("\tSale P%ld\n",(intptr_t)arg); 
     pthread_exit(NULL); 
 }
 
@@ -143,7 +141,7 @@ void *Consumidor(void *arg){
         pthread_mutex_lock(&mutex); //accede al buffer
             if(iC<15){
                 while(n_datos == 0){//buffer vacío
-                    printf("[n_datos %d]C[%ld]:Esperando datos para consumir\n",n_datos,(intptr_t)arg);
+                    printf("Esperando datos para consumir\n");
                     pthread_cond_wait(&vacio,&mutex);
                     if(iC == 15) {
                         break;                    
@@ -151,24 +149,24 @@ void *Consumidor(void *arg){
                 }
                 if(iC<15){
                     dato= buffer[iC%TAM_BUFFER];//pos = i %TAM_BUFFER
-                    printf("El dato consumido es %i de %d por C%ld\n",dato,iC % TAM_BUFFER,(intptr_t)arg);
+                    printf("Dato consumido = %i , pos [%d], consumido por Consumidor: %ld\n",dato,iC % TAM_BUFFER,(intptr_t)arg);
                     n_datos--;//se desocupó un lugar del buffer
                     if(n_datos == ((TAM_BUFFER)-1)) {//ya hay por lo menos un lugar por ocupar
                         printf("Se ha liberado un espacio, se puede seguir produciendo!\n");          
                         pthread_cond_signal(&lleno);
                     }            
                     iC++;
-                    printf("IC=%d\n",iC);
+                    //printf("IC=%d\n",iC);
                 }
             }
             if(iC == 15){
-                pthread_cond_broadcast(&vacio);
+                pthread_cond_broadcast(&vacio);//libera los posibles consumidores interrupidos por no haber datos por consumir
                 vC = false;
             }
         pthread_mutex_unlock(&mutex); 
         sleep(1);    
     }
-    printf("\tSale C%ld\n",(intptr_t)arg);
+    //printf("\tSale C%ld\n",(intptr_t)arg);
     pthread_exit(NULL); 
 }
 

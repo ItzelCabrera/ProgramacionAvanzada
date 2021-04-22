@@ -28,7 +28,7 @@ void *multiplicacion(int res);
 
 int main(){
     printf("\nPrograma de operaciones aritmeticas protegiendo con MUTEX y VCond\n");
-    printf("PROCESO MAIN---%ld",pthread_self());
+    printf("PROCESO MAIN---%ld\n",pthread_self());
 
 	pthread_t id[N_THREADS]; //array de id's
 
@@ -77,14 +77,14 @@ void *suma(int res){
 	for(int k = 0; k<10;k++){
         pthread_mutex_lock(&mutex);
             while(operacion != 0){
-                printf("La suma se espera\n");
+                //printf("La suma se espera\n");
                 pthread_cond_wait(&s,&mutex);             
             }
 		    res = resultado;
 		    resultado +=1;
 		    printf("Hilo #%ld => (%d)+1 = %d\n",pthread_self(),res,resultado);
             if(operacion == 0){
-                printf("Terminó la suma, le da el turno a resta\n");
+                //printf("Terminó la suma, le da el turno a resta\n");
                 pthread_cond_signal(&r);
                 operacion = 1;
             }
@@ -97,14 +97,14 @@ void *resta(int res){
 	for(int k = 0; k<10;k++){
 	    pthread_mutex_lock(&mutex);
             while(operacion != 1){
-                printf("La resta se espera\n");
+                //printf("La resta se espera\n");
                 pthread_cond_wait(&r,&mutex);      
             }
 		    res = resultado;
 		    resultado -=1;
-		    printf("\nHilo #%ld => (%d)-1 = %d\n",pthread_self(),res,resultado);
+		    printf("Hilo #%ld => (%d)-1 = %d\n",pthread_self(),res,resultado);
             if(operacion == 1){
-                    printf("Terminó la resta, le da el turno a mult\n");
+                    //printf("Terminó la resta, le da el turno a mult\n");
                     pthread_cond_signal(&m);
                     operacion = 2;
              }        
@@ -117,14 +117,14 @@ void *multiplicacion(int res){
 	for(int k = 0; k<10;k++){
         pthread_mutex_lock(&mutex);
             while(operacion != 2){
-                printf("La mult se espera\n");
+                //printf("La mult se espera\n");
                 pthread_cond_wait(&m,&mutex);      
             }
 		    res = resultado;
 		    resultado *=4;
-		    printf("\nHilo #%ld => (%d)*4 = %d\n",pthread_self(),res,resultado);
+		    printf("Hilo #%ld => (%d)*4 = %d\n",pthread_self(),res,resultado);
             if(operacion == 2){
-                    printf("Terminó la mult, le da el turno a div\n");
+                    //printf("Terminó la mult, le da el turno a div\n");
                     pthread_cond_signal(&d);
                     operacion = 3;
              }         
@@ -137,14 +137,14 @@ void *division(int res){
 	for(int k = 0; k<10;k++){
         pthread_mutex_lock(&mutex);
             while(operacion != 3){
-                printf("La div se espera\n");
+                //printf("La div se espera\n");
                 pthread_cond_wait(&d,&mutex);      
             }		    
             res = resultado;
 		    resultado /=4;
-		    printf("\nHilo #%ld => (%d)/4 = %d\n",pthread_self(),res,resultado);
+		    printf("Hilo #%ld => (%d)/4 = %d\n",pthread_self(),res,resultado);
             if(operacion == 3){
-                    printf("Terminó la div, le da el turno a sum\n");
+                    //printf("Terminó la div, le da el turno a sum\n");
                     pthread_cond_signal(&s);
                     operacion = 0;
              }         

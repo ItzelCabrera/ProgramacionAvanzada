@@ -7,6 +7,7 @@
 #include<string.h>
 #include<sys/types.h>
 #include<sys/wait.h>
+#include<semaphore.h>
 #include<pthread.h>
 #define TAM_BUFFER 10
 #define MIN_ESP 1 //minimo de espacios disp que debe tener para seguir consumiendo
@@ -84,4 +85,3 @@ void *Consumidor(void *arg){
         i++;    
     }
 }
-
