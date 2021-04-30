@@ -52,6 +52,7 @@ void *Fumadores(void *arg){
     while(1){
         switch(f){
             case 1:
+                sleep(2);
                 printf("\tFumador con cerillo espera a que le asignen su turno\n");
                 sem_wait(&fC); //espera a que el agente le de permiso
                 printf("...FUMADOR CERILLO FUMA...\tPID = %ld\n",pthread_self());
@@ -80,7 +81,7 @@ void *Agente(void *arg){
     srand(time(0));
 
     while(1){
-        sleep(4);
+        //sleep(4);
         if(c==0)sem_wait(&a);//cuando el agente entra por primera vez, se actualiza su valor a cero, para poder pausar y renaudar al agente
         aleat = rand()%3; 
         //0 --> paso al fumador con cerillo 
