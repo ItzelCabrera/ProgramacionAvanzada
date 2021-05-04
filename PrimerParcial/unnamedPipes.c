@@ -4,13 +4,14 @@
 #include<stdlib.h>
 #include<stdlib.h>
 #include<string.h>
+#include<sys/wait.h>
 
 int main(){
     int fd[2],fd2[2],nbytes;
     pid_t proc;
     char saludo[] = "Hola. Este es un mensaje";
     char respuesta[] = "Hola. Esta es una respuesta";
-    char readbuffer[80];
+    char readbuffer[80] = "";
     
     if(pipe(fd)==-1){
         printf("Hubo error al crear la tubería 1\n");
