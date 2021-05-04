@@ -110,6 +110,7 @@ void *Cliente(void *arg){
 
     int n1,n2=0;
     while(v){ //mientras el cliente todavía tenga servicios por realizar
+        sleep(2);        
         if(na == 5){
             printf("Asientos ocupados, no se puede atender al cliente #%d\n",c);
             sem_wait(&sE);   //espera a que un asiento se desocupe     
@@ -126,6 +127,7 @@ void *Cliente(void *arg){
                     sem_wait(&sC1);//se ocupa un empleado
                     na++; //se ocupa un asiento
                     printf("El cortador 1, le está cortando el pelo al cliente #%d\n",c);
+                    sleep(1);
                     serv[0] = 0;
                     ns--;//ya se realizó un servicio
                     sem_post(&sC1);//se desocupa un empleado
@@ -135,6 +137,7 @@ void *Cliente(void *arg){
                     sem_wait(&sC2);//se ocupa un empleado
                     na++; //se ocupa un asiento
                     printf("El cortador 2, le está cortando el pelo al cliente #%d\n",c);
+                    sleep(2);
                     serv[0] = 0;
                     ns--;//ya se realizó un servicio
                     sem_post(&sC2);//se desocupa un empleado
@@ -149,6 +152,7 @@ void *Cliente(void *arg){
                     sem_wait(&sP1);//se ocupa un empleado
                     na++; //se ocupa un asiento
                     printf("El pintador 1, le está pintando el pelo al cliente #%d\n",c);
+                    sleep(4);
                     serv[1] = 0;
                     ns--;//ya se realizó un servicio
                     sem_post(&sP1);//se desocupa un empleado
@@ -158,6 +162,7 @@ void *Cliente(void *arg){
                     sem_wait(&sP2);//se ocupa un empleado
                     na++; //se ocupa un asiento
                     printf("El pintador 2, le está pintando el pelo al cliente #%d\n",c);
+                    sleep(5);
                     serv[1] = 0;
                     ns--;//ya se realizó un servicio
                     sem_post(&sP2);//se desocupa un empleado
@@ -171,6 +176,7 @@ void *Cliente(void *arg){
                     sem_wait(&sD);//se ocupa un empleado
                     na++; //se ocupa un asiento
                     printf("Le están haciendo pedicure al cliente #%d\n",c);
+                    sleep(3);
                     serv[2] = 0;
                     ns--;//ya se realizó un servicio
                     sem_post(&sD);//se desocupa un empleado
@@ -184,6 +190,7 @@ void *Cliente(void *arg){
                     sem_wait(&sM);//se ocupa un empleado
                     na++; //se ocupa un asiento
                     printf("Le están haciendo manicure al cliente #%d\n",c);
+                    sleep(1);
                     serv[3] = 0;
                     ns--;//ya se realizó un servicio
                     sem_post(&sM);//se desocupa un empleado
@@ -241,3 +248,4 @@ int main(){
 
     return 0;
 }
+
