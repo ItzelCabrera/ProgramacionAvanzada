@@ -1,30 +1,3 @@
-/*
-IDEA
-    CLIENTE:
-        Llega el cliente a la estética, se le generan sus servicios
-
-        Mientras tenga servicios por realizar{
-            Están ocupados los cinco asientos?
-                SI => Espera a que se desocupe un asiento
-                NO=> 
-                    Tiene servicios para realizarse?
-                        SI=>
-                            Hay alguien que le pueda hacer algun servicio?
-                                SI => 
-                                    se ocupa un empleado
-                                    se ocupa un asiento
-                                    se realiza el trabajo
-                                    se marca el trabajo realizado
-                                    desocupa un empleado
-                                    desocupa un asiento
-                                    los clientes que esperaban un asiento libre,pueden competir por ese asiento
-                        NO=> 
-                            sale de la estética
-        }
-    
-    EMPLEADO:
-        Debe indicar que llegó a la estética
-*/
 #include<stdio.h>
 #include<stdlib.h>
 #include<unistd.h>
@@ -238,15 +211,24 @@ int main(){
     sem_init(&sM,0,3);
 
     for(k = 0; k<n_clientes;k++){
-        pthread_create(&cliente[k],0,&Cliente,(void*)(intptr_t)k);
+        if(pthread_create(&cliente[k],0,&Cliente,(void*)(intptr_t)k)){
+            printf("\nError al crear el hilo\n");
+			exit(EXIT_FAILURE);
+        }
     }
 
     for(k = 0; k<6;k++){
-        pthread_create(&empleado[k],0,&Empleado,(void*)(intptr_t)k);
+        if(pthread_create(&empleado[k],0,&Empleado,(void*)(intptr_t)k)){
+            printf("\nError al crear el hilo\n");
+			exit(EXIT_FAILURE);
+        }
     }
 
     for(k=0;k<n_clientes;k++){
-        pthread_join(cliente[k],NULL);    
+        if(pthread_join(cliente[k],NULL)){
+            printf("\nError al esperar al hilo hijo\n");
+			exit(EXIT_FAILURE);
+        } 
     }
 
     sem_destroy(&sE);
