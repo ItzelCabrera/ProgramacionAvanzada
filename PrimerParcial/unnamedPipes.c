@@ -48,6 +48,8 @@ int main(){
         //escribe mediante el descriptor de escritura
         printf("Padre responde\n");
         write(fd2[1],respuesta,strlen(respuesta)); 
+
+        wait(&proc);
     }
     
     return 0;
