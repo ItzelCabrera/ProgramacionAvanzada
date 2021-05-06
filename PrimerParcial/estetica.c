@@ -24,42 +24,42 @@ void *Empleado(void *arg){
     int n; //para leer el valor de su semaforo
     switch(k){
         case 1:
-            printf("Empleado 1 que corta cabello llegó\n");
+            printf("Empleado %ld que corta cabello llegó\n",pthread_self());
             sem_getvalue(&sC1,&n);
             if(n == 3){
                 sem_wait(&sC1);  //disminuye el valor de su semaforo a 2, indicando que ya llegó a la estética          
             }
             break;
         case 2:
-            printf("Empleado 2 que corta cabello llegó\n");
+            printf("Empleado %ld que corta cabello llegó\n",pthread_self());
             sem_getvalue(&sC2,&n);
             if(n == 3){
                 sem_wait(&sC2);//disminuye el valor de su semaforo a 2, indicando que ya llegó a la estética     
             }
             break;
         case 3:
-            printf("Empleado 1 que pinta cabello llegó\n");
+            printf("Empleado %ld que pinta cabello llegó\n",pthread_self());
             sem_getvalue(&sP1,&n);
             if(n == 3){
                 sem_wait(&sP1);//disminuye el valor de su semaforo a 2, indicando que ya llegó a la estética        
             }
             break;
         case 4:
-            printf("Empleado 2 que pinta cabello llegó\n");
+            printf("Empleado %ld que pinta cabello llegó\n",pthread_self());
             sem_getvalue(&sP2,&n);
             if(n == 3){
                 sem_wait(&sP2); //disminuye el valor de su semaforo a 2, indicando que ya llegó a la estética          
             }
             break;
         case 5:
-            printf("Empleado que hace pedicure llegó\n");
+            printf("Empleado %ld que hace pedicure llegó\n",pthread_self());
             sem_getvalue(&sD,&n);
             if(n == 3){
                 sem_wait(&sD); //disminuye el valor de su semaforo a 2, indicando que ya llegó a la estética           
             }
             break;
         case 6:
-            printf("Empleado que hace manicure llegó\n");
+            printf("Empleado %ld que hace manicure llegó\n",pthread_self());
             sem_getvalue(&sM,&n);
             if(n == 3){
                 sem_wait(&sM); //disminuye el valor de su semaforo a 2, indicando que ya llegó a la estética           
@@ -77,8 +77,8 @@ void *Cliente(void *arg){
     int aleat = 0; 
     bool v = true; //
 
-    printf("Cliente #%d llegó!\n",c);
-    printf("Cliente #%d requiere %d servicios\n",c,ns);
+    printf("Cliente #%ld llegó!\n",pthread_self());
+    printf("Cliente #%ld requiere %d servicios\n",pthread_self(),ns);
     //Generan los servicios
     if(ns <4){
         aleat = rand()%4;
@@ -111,11 +111,11 @@ void *Cliente(void *arg){
     int n1,n2=0;
     while(v){ //mientras el cliente todavía tenga servicios por realizar
         if(na == 5){
-            printf("Asientos ocupados, no se puede atender al cliente #%d\n",c);
+            printf("Asientos ocupados, no se puede atender al cliente #%ld\n",pthread_self());
             sem_wait(&sE);   //espera a que un asiento se desocupe     
         }    
         if(ns == 0){
-            printf("Ya se terminó de atender al cliente #%d\n",c);
+            printf("Ya se terminó de atender al cliente #%ld\n",pthread_self());
             v = false;   
         }else{
             if(serv[0] == 1){
@@ -125,7 +125,7 @@ void *Cliente(void *arg){
                 if(n1 == 2){
                     sem_wait(&sC1);//se ocupa un empleado
                     na++; //se ocupa un asiento
-                    printf("El cortador 1, le está cortando el pelo al cliente #%d\n",c);
+                    printf("El cortador 1, le está cortando el pelo al cliente #%ld\n",pthread_self());
                     sleep(1);
                     serv[0] = 0;
                     ns--;//ya se realizó un servicio
@@ -135,7 +135,7 @@ void *Cliente(void *arg){
                 }else if(n2 == 2){
                     sem_wait(&sC2);//se ocupa un empleado
                     na++; //se ocupa un asiento
-                    printf("El cortador 2, le está cortando el pelo al cliente #%d\n",c);
+                    printf("El cortador 2, le está cortando el pelo al cliente #%ld\n",pthread_self());
                     sleep(3);
                     serv[0] = 0;
                     ns--;//ya se realizó un servicio
@@ -150,7 +150,7 @@ void *Cliente(void *arg){
                 if(n1 == 2){
                     sem_wait(&sP1);//se ocupa un empleado
                     na++; //se ocupa un asiento
-                    printf("El pintador 1, le está pintando el pelo al cliente #%d\n",c);
+                    printf("El pintador 1, le está pintando el pelo al cliente #%ld\n",pthread_self());
                     sleep(2);
                     serv[1] = 0;
                     ns--;//ya se realizó un servicio
@@ -160,7 +160,7 @@ void *Cliente(void *arg){
                 }else if(n2 == 2){
                     sem_wait(&sP2);//se ocupa un empleado
                     na++; //se ocupa un asiento
-                    printf("El pintador 2, le está pintando el pelo al cliente #%d\n",c);
+                    printf("El pintador 2, le está pintando el pelo al cliente #%ld\n",pthread_self());
                     sleep(5);
                     serv[1] = 0;
                     ns--;//ya se realizó un servicio
@@ -174,7 +174,7 @@ void *Cliente(void *arg){
                 if(n1 == 2){
                     sem_wait(&sD);//se ocupa un empleado
                     na++; //se ocupa un asiento
-                    printf("Le están haciendo pedicure al cliente #%d\n",c);
+                    printf("Le están haciendo pedicure al cliente #%ld\n",pthread_self());
                     sleep(1);
                     serv[2] = 0;
                     ns--;//ya se realizó un servicio
@@ -188,7 +188,7 @@ void *Cliente(void *arg){
                 if(n1 == 2){
                     sem_wait(&sM);//se ocupa un empleado
                     na++; //se ocupa un asiento
-                    printf("Le están haciendo manicure al cliente #%d\n",c);
+                    printf("Le están haciendo manicure al cliente #%ld\n",pthread_self());
                     sleep(3);
                     serv[3] = 0;
                     ns--;//ya se realizó un servicio
