@@ -106,7 +106,7 @@ void *Cliente(void *arg){
             serv[k] = 1; //se indica que se realizarán los 4 servicios
         }
     }
-    printf("Servicios del cliente-->[%d,%d,%d,%d]\n",serv[0],serv[1],serv[2],serv[3]);
+    //printf("Servicios del cliente-->[%d,%d,%d,%d]\n",serv[0],serv[1],serv[2],serv[3]);
 
     int n1,n2=0;
     while(v){ //mientras el cliente todavía tenga servicios por realizar
