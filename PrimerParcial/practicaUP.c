@@ -8,10 +8,6 @@
 #include <semaphore.h>
 #define NH 3
 
-sem_t s1;
-sem_t s2;
-sem_t s3;
-
 int main(){
     int fd[2],fd2[2],nbytes;
     pid_t proc;
@@ -19,10 +15,6 @@ int main(){
     char saludo[] = "\tHola. Este es un mensaje";
     char respuesta[] = "\tHola. Esta es una respuesta";
     char readbuffer[80] = " ";
-    
-    sem_init(&s1,0,2);
-    sem_init(&s2,0,2);
-    sem_init(&s3,0,2);
 
     //CREAN TUBERÍAS
     if(pipe(fd)==-1){
@@ -57,7 +49,6 @@ int main(){
     //if (j == 2)printf("Soy el tercer hijo : %d\n",getpid());
     //if (j == 3)printf("Soy el padre : %d\n",getpid());
     
-    //char myPID[40] = " ";
     char dest [40] = " ";
     char delimitador [] = "\t";
     char *key;
