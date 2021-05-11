@@ -11,7 +11,6 @@
 int main(){
     int fd[2],fd2[2],nbytes;
     pid_t proc;
-    int pid[NH];
     char saludo[] = "\tHola. Este es un mensaje";
     char respuesta[] = "\tHola. Esta es una respuesta";
     char readbuffer[80] = " ";
@@ -35,7 +34,6 @@ int main(){
 		}if(proc == 0){//hijo
 			printf("\nSoy el proceso[%i], mi papa es [%i]\n",getpid(),getppid());
             j = i;
-            pid[i] = getpid();
             break;
         }else{
            //printf("Entra padre %d\n",getpid());
@@ -54,58 +52,83 @@ int main(){
     char *key;
     int aleat = 0;
     int x = 0;
+    int n1,n2,n3=0;
 
     while(1){
         strcpy(dest,""); //vacio el string que se manda como mensaje
         if (proc == 0){
-            //cierra el descriptor de lectura
-            close(fd[0]);
-            //envía el saludo por el descriptor de escritura
-            printf("Hijo %d escribe\n",getpid());
-            //genera un numero aleatorio, el destinatario
-            do{
-               aleat = rand()%3;
-            }while(aleat == j);
-            printf("J = %d\tAleat = %d\n",j,aleat);
-            sprintf(dest,"%d",aleat); //convierto el pid a string
-            strcat(dest,saludo); //concateno el pid con el mensaje
-            //printf("Mensaje = %s\n",dest);
-            write(fd[1],dest,strlen(dest));
-            //sleep(3);
+            if((j == 0) || (j == 1)){
+                //escribo pipe 1
+                    close(fd[0]);//cierra el descriptor de lectura
+                    //envía el saludo por el descriptor de escritura
+                    printf("Hijo %d escribe\n",getpid());
+                    do{
+                       aleat = rand()%3;//genera un destinatario (distinto a sí mismo)
+                    }while(aleat == j);
+                    //printf("J = %d\tAleat = %d\n",j,aleat);
+                    sprintf(dest,"%d",aleat); //convierto el dest a string
+                    strcat(dest,saludo); //concateno el pid con el mensaje
+                    printf("Mensaje = %s\n",dest);
+                    write(fd[1],dest,strlen(dest));
+                    sleep(3); 
+                //leo pipe 2
+                    //Cierra el descritor de escritura
+                    close(fd2[1]);
+                    //lee desde el decriptor de lectura
+                    nbytes = read(fd2[0],readbuffer,sizeof(readbuffer));
+                    printf("Hijo %d lee [%d] carac: %s\n",j,nbytes,readbuffer);
+                    if(nbytes == -1)printf("No había nada que leer");
+                    else{
+                          key = strtok(readbuffer,delimitador);
+                          x = atoi(key); //key a integer
+                          if(key != NULL) printf("Key = %s\n",key); 
+                          if(x == j)printf("\t%d.-Mensaje Recibido! [%s]\n",j,readbuffer);   
+                          else {
+                            close(fd[0]);//cierra el descriptor de lectura
+                            //envía el saludo por el descriptor de escritura
+                            printf("Hijo %d DEVUELVE el mensaje\n",getpid());
+                            printf("Mensaje = %s\n",readbuffer);
+                            write(fd[1],readbuffer,strlen(readbuffer));         
+                          }              
+                    }
+            }else{
+                //escribo pipe 2
+                        close(fd2[0]);//cierra el descriptor de lectura
+                        //envía el saludo por el descriptor de escritura
+                        printf("Hijo %d escribe\n",getpid());
+                        do{
+                           aleat = rand()%3;//genera un destinatario (distinto a sí mismo)
+                        }while(aleat == j);
+                        //printf("J = %d\tAleat = %d\n",j,aleat);
+                        sprintf(dest,"%d",aleat); //convierto el dest a string
+                        strcat(dest,saludo); //concateno el pid con el mensaje
+                        printf("Mensaje = %s\n",dest);
+                        write(fd2[1],dest,strlen(dest));
+                        sleep(3); 
+                    //leo pipe 1
+                        //Cierra el descritor de escritura
+                        close(fd[1]);
+                        //lee desde el decriptor de lectura
+                        nbytes = read(fd[0],readbuffer,sizeof(readbuffer));
+                        printf("Hijo %d lee[%d] carac: %s\n",j,nbytes,readbuffer);
+                        if(nbytes == -1)printf("No había nada que leer");
+                        else{
+                              key = strtok(readbuffer,delimitador);
+                              x = atoi(key); //key a integer
+                              if(key != NULL) printf("Key = %s\n",key); 
+                              if(x == j)printf("\t%d.-Mensaje Recibido! [%s]\n",j,readbuffer);   
+                              else {
+                                close(fd2[0]);//cierra el descriptor de lectura
+                                //envía el saludo por el descriptor de escritura
+                                printf("Hijo %d DEVUELVE el mensaje\n",getpid());
+                                printf("Mensaje = %s\n",readbuffer);
+                                write(fd2[1],readbuffer,strlen(readbuffer));         
+                              }              
+                        }
+                }
             
-        }else{
-            /*
-            //Cierra el descritor de escritura
-            close(fd[1]);
-            //lee desde el decriptor de lectura
-            nbytes = read(fd[0],readbuffer,sizeof(readbuffer));
-            printf("Padre lee [%d] carac: %s\n",nbytes,readbuffer);
-            key = strtok(readbuffer,delimitador);
-            if(key != NULL) printf("Key = %s\n",key);
-            x = atoi(key); //key a integer
-            switch(x){
-                case 0:
-                    printf("Mensaje para el primer hijo\n");
-                    sem_wait(&s1); //disminuye el sem a 1
-                    break;
-                case 1:
-                    printf("Mensaje para el segundo hijo\n");
-                    sem_wait(&s2); //disminuye el sem a 1
-                    break;
-                case 2:
-                    printf("Mensaje para el tercer hijo\n");
-                    sem_wait(&s3); //disminuye el sem a 1
-                    break;
-                default:
-                    printf("Error\n");
-            }
-        */
         }
-    }
-    
-    sem_destroy(&s1);
-    sem_destroy(&s2); 
-    sem_destroy(&s3); 
+    } 
     return 0;
         
 
