@@ -68,12 +68,12 @@ int main(){
                 //printf("J = %d\tAleat = %d\n",j,aleat);
                 sprintf(dest,"%d",aleat); //convierto el aleat a string
                 strcat(dest,saludo); //concateno el pid con el mensaje
-                printf("DE : %d Mensaje = %s\n",j,dest);
+                printf("E1 DE : %d Mensaje = %s\n",j,dest);
                 write(fd[1],dest,strlen(dest));
                 sleep(3); 
                 //LEER P2
                 nbytes = read(fd2[0],readbuffer,sizeof(readbuffer));
-                printf("Hijo %d lee [%d] carac: %s\n",j,nbytes,readbuffer);
+                printf("L2 Hijo %d lee [%d] carac: %s\n",j,nbytes,readbuffer);
                 if(nbytes == -1)printf("No había nada que leer");
                 else{
                     key = strtok(readbuffer,delimitador);//separa el destinatario
@@ -98,12 +98,12 @@ int main(){
                 //printf("J = %d\tAleat = %d\n",j,aleat);
                 sprintf(dest,"%d",aleat); //convierto el aleat a string
                 strcat(dest,saludo); //concateno el pid con el mensaje
-                printf("DE : %d Mensaje = %s\n",j,dest);
+                printf("E2 DE : %d Mensaje = %s\n",j,dest);
                 write(fd2[1],dest,strlen(dest));
                 sleep(3);
                 //LEER P1
                 nbytes = read(fd[0],readbuffer,sizeof(readbuffer));
-                printf("Hijo %d lee [%d] carac: %s\n",j,nbytes,readbuffer);
+                printf("L1 Hijo %d lee [%d] carac: %s\n",j,nbytes,readbuffer);
                 if(nbytes == -1)printf("No había nada que leer");
                 else{
                     key = strtok(readbuffer,delimitador);//separa el destinatario
