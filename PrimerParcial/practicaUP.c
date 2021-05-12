@@ -69,14 +69,19 @@ int main(){
             printf("E1 DE : %d Mensaje = %s\n",j,dest);
             write(fd[1],dest,strlen(dest));
             sleep(3);
+            //LEE POR PIPE 2
+            close(fd2[1]);//Cierra el descritor de escritura
+            nbytes = read(fd2[0],readbuffer,sizeof(readbuffer));//lee desde el decriptor de lectura
+            printf("Hijo %d lee [%d] carac: %s\n",j,nbytes,readbuffer);
         }else{
             printf("entra padre\n");
             //LEE POR PIPE 1
             close(fd[1]);//Cierra el descritor de escritura
             nbytes = read(fd[0],readbuffer,sizeof(readbuffer));//lee desde el decriptor de lectura
+            //ESCRIBE POR PIPE 2
             close(fd2[0]);//cierra el descriptor de lectura
             write(fd2[1],readbuffer,strlen(readbuffer));
-            printf("L1 Padre lee [%d] carac: %s\n",nbytes,readbuffer);
+            printf("Padre lee [%d] carac: %s\n",nbytes,readbuffer);
         }
     } 
     return 0;
