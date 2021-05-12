@@ -54,10 +54,11 @@ int main(){
     int x = 0;
     char rb[80] = " ";
     while(1){
-        strcpy(readbuffer,"");
-        printf("new readbuffer = %s\n",readbuffer);
-        strcpy(rb,"");
-        printf("new rb = %s\n",rb);
+        //strcpy(readbuffer,"");
+        //printf("new readbuffer = %s\n",readbuffer);
+        //strcpy(rb,"");
+        //printf("new rb = %s\n",rb);
+        fflush(stdin);
         if (proc == 0){
             //ESCRIBE POR PIPE 1
             close(fd[0]);//cierra el descriptor de lectura
