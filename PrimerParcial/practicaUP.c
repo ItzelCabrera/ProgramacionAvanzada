@@ -71,11 +71,10 @@ int main(){
         }else{
             //LEE POR PIPE 1
             close(fd[1]);//Cierra el descritor de escritura
-            close(fd2[0]);//cierra el descriptor de lectura
             nbytes = read(fd[0],readbuffer,sizeof(readbuffer));//lee desde el decriptor de lectura
+            close(fd2[0]);//cierra el descriptor de lectura
             write(fd2[1],readbuffer,strlen(readbuffer));
-            printf("L1 Padre lee [%d] carac y reenvia: %s\n",nbytes,readbuffer);
-            sleep(3);
+            printf("L1 Padre lee [%d] carac: %s\n",nbytes,readbuffer);
         }
     } 
     return 0;
