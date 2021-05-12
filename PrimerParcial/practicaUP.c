@@ -75,7 +75,7 @@ int main(){
                 //LEE POR P1
                 close(fd[1]);//Cierra el descritor de escritura
                 nbytes = read(fd[0],readbuffer,sizeof(readbuffer));//lee desde el decriptor de lectura
-                if(nbytes == -1)printf("Error al leer mensaje %s\n",readbuffer);
+                if(nbytes == -1)printf("%d Error al leer mensaje\n",j);
                 else{
                     strcpy(rb,readbuffer);
                     printf("RB = %s\n",rb);
