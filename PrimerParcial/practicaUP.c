@@ -75,6 +75,7 @@ int main(){
             nbytes = read(fd[0],readbuffer,sizeof(readbuffer));//lee desde el decriptor de lectura
             write(fd2[1],readbuffer,strlen(readbuffer));
             printf("L1 Padre lee [%d] carac y reenvia: %s\n",nbytes,readbuffer);
+            sleep(3);
         }
     } 
     return 0;
