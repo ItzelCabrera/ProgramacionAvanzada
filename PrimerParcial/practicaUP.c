@@ -49,7 +49,7 @@ int main(){
     
     char dest [40] = " ";
     char delimitador [2] = "/";
-    char *key;
+    char *key = " ";
     int aleat = 0;
     int x = 0;
     char rb[80] = " ";
