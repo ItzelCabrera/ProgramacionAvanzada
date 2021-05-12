@@ -52,89 +52,74 @@ int main(){
     char *key;
     int aleat = 0;
     int x = 0;
-    char rb [80] = " ";
-
+    char rb[80] = " ";
     while(1){
+        strcpy(readbuffer,"");
+        printf("new readbuffer = %s\n",readbuffer);
+        strcpy(rb,"");
+        printf("new rb = %s\n",rb);
         if (proc == 0){
-            strcpy(dest," "); //vacio el string que se manda como mensaje
-            strcpy(readbuffer," "); //vacio el string de lectura
-            strcpy(rb," ");
-            fflush(stdin);
-            if(j%2 == 0){
-                //ESCRIBIR P1
-                close(fd[0]);//cierra el descriptor de lectura
-                //envía el saludo por el descriptor de escritura
-                do{
-                    aleat = rand()%3;//genera un destinatario (distinto a sí mismo)
-                }while(aleat == j);
-                //printf("J = %d\tAleat = %d\n",j,aleat);
-                sprintf(dest,"%d",aleat); //convierto el aleat a string
-                strcat(dest,saludo); //concateno el pid con el mensaje
-                printf("E1 DE : %d Mensaje = %s\n",j,dest);
-                write(fd[1],dest,strlen(dest));
-                sleep(3); 
-                strcpy(dest," "); //vacio el string que se manda como mensaje
-                strcpy(readbuffer," "); //vacio el string de lectura
-                strcpy(rb," ");
-                fflush(stdin);
-                //LEER P2
-                close(fd2[1]);
-                nbytes = read(fd2[0],readbuffer,sizeof(readbuffer));
+            //LEE POR PIPE 2
+            close(fd2[1]);//Cierra el descritor de escritura
+            nbytes = read(fd2[0],readbuffer,sizeof(readbuffer));//lee desde el decriptor de lectura
+            if(nbytes = -1) printf("No hay mensaje\n");
+            else{
                 printf("L2 Hijo %d lee [%d] carac: %s\n",j,nbytes,readbuffer);
-                if(nbytes == -1)printf("No había nada que leer");
-                else{
-                    strcpy(rb,readbuffer);
-                    key = strtok(readbuffer,delimitador);//separa el destinatario
-                    x = atoi(key); //key a integer
-                    if(key != NULL) printf("Key = %s\n",key); 
-                    if(x == j)printf("\t%d.-Mensaje Recibido! [%s]\n",j,readbuffer);   
-                    else {//Devuelve el mensaje en p1
-                        close(fd[0]);//cierra el descriptor de lectura
-                        //envía el saludo por el descriptor de escritura
-                        printf("RB: %s\n",rb);
-                        printf("Hijo %d DEVUELVE el mensaje\n",j);
-                        printf("Mensaje DEVUELTO = %s\n",rb);
-                        write(fd[1],rb,strlen(rb));         
-                    }              
-                }
-            }else{
-                //ESCRIBIR P2
-                close(fd2[0]);//cierra el descriptor de lectura
-                //envía el saludo por el descriptor de escritura
-                do{
-                    aleat = rand()%3;//genera un destinatario (distinto a sí mismo)
-                }while(aleat == j);
-                //printf("J = %d\tAleat = %d\n",j,aleat);
-                sprintf(dest,"%d",aleat); //convierto el aleat a string
-                strcat(dest,saludo); //concateno el pid con el mensaje
-                printf("E2 DE : %d Mensaje = %s\n",j,dest);
-                write(fd2[1],dest,strlen(dest));
-                sleep(3);
-                strcpy(dest," "); //vacio el string que se manda como mensaje
-                strcpy(readbuffer," "); //vacio el string de lectura
-                strcpy(rb," ");
-                fflush(stdin);
-                //LEER P1
-                close(fd[1]);
-                nbytes = read(fd[0],readbuffer,sizeof(readbuffer));
-                printf("L1 Hijo %d lee [%d] carac: %s\n",j,nbytes,readbuffer);
-                if(nbytes == -1)printf("No había nada que leer");
-                else{
-                    strcpy(rb,readbuffer);
-                    key = strtok(readbuffer,delimitador);//separa el destinatario
-                    x = atoi(key); //key a integer
-                    if(key != NULL) printf("Key = %s\n",key); 
-                    if(x == j)printf("\t%d.-Mensaje Recibido! [%s]\n",j,readbuffer);   
-                    else {//Devuelve el mensaje en p2
-                        close(fd2[0]);//cierra el descriptor de lectura
-                        //envía el saludo por el descriptor de escritura
-                        printf("RB: %s\n",rb);
-                        printf("Hijo %d DEVUELVE el mensaje\n",j);
-                        printf("Mensaje DEVUELTO = %s\n",rb);
-                        write(fd2[1],rb,strlen(rb));         
-                    }              
+                strcpy(rb,readbuffer);
+                printf(" rb = %s\n",rb);
+                key = strtok(readbuffer,delimitador);
+                if(key != NULL) printf("Key = %s\n",key);
+                x = atoi(key); //key a integer
+                if(x == j){
+                    printf("%d.-Mensaje recibido! %s",j,rb);
+                }else{
+                    //DEVUELVE EL MENSAJE POR PIPE1
+                    close(fd[0]);//cierra el descriptor de lectura
+                    //devuelve el saludo por el descriptor de escritura
+                    printf("D1 Mensaje DEVUELTO por %d= %s\n",j,rb);
+                    write(fd[1],rb,strlen(rb));
                 }
             }
+            //ESCRIBE POR PIPE 1
+            close(fd[0]);//cierra el descriptor de lectura
+            //envía el saludo por el descriptor de escritura
+            do{
+                aleat = rand()%3;//genera un destinatario (distinto a sí mismo)
+            }while(aleat == j);
+            //printf("J = %d\tAleat = %d\n",j,aleat);
+            sprintf(dest,"%d",aleat); //convierto el aleat a string
+            strcat(dest,saludo); //concateno el numero de proceso con el mensaje
+            printf("E1 DE : %d Mensaje = %s\n",j,dest);
+            write(fd[1],dest,strlen(dest));
+            sleep(3);
+        }else{
+            //LEE POR PIPE 1
+            close(fd[1]);//Cierra el descritor de escritura
+            nbytes = read(fd[0],readbuffer,sizeof(readbuffer));//lee desde el decriptor de lectura
+            printf("L1 Padre lee [%d] carac: %s\n",nbytes,readbuffer);
+            strcpy(rb,readbuffer);
+            printf(" rb = %s\n",rb);
+            key = strtok(readbuffer,delimitador);
+            if(key != NULL) printf("Key = %s\n",key);
+            x = atoi(key); //key a integer
+            switch(x){
+                case 0:
+                    printf("Mensaje para el primer hijo\n");
+                    break;
+                case 1:
+                    printf("Mensaje para el segundo hijo\n");
+                    break;
+                case 2:
+                    printf("Mensaje para el tercer hijo\n");
+                    break;
+                default:
+                    printf("Error\n");
+            }
+            //DEVUELVE EL MENSAJE POR PIPE2
+            close(fd2[0]);//cierra el descriptor de lectura
+            printf("Padre DEVUELVE el mensaje = %s\n",rb);//escribe mediante el descriptor de escritura
+            write(fd2[1],rb,strlen(rb));  
+            sleep(3); 
         }
     } 
     return 0;
