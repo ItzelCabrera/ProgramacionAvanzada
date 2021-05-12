@@ -58,52 +58,25 @@ int main(){
     while(1){
         strcpy(readbuffer,"");
         if(proc == 0){
-            if(c == 0){
-                //ESCRITURAS INICIALES
-                close(fd[0]);//cierra el descriptor de lectura
-                //envía el saludo por el descriptor de escritura
-                do{
-                    aleat = rand()%3;//genera un destinatario (distinto a sí mismo)
-                }while(aleat == j);
-                //printf("J = %d\tAleat = %d\n",j,aleat);
-                sprintf(dest,"%d",aleat); //convierto el aleat a string
-                strcat(dest,saludo); //concateno el numero de proceso con el mensaje
-                printf("E0 DE : %d Mensaje = %s\n",j,dest);
-                write(fd[1],dest,strlen(dest));
-                sleep(3);
-            }else{
-                //ESCRIBE POR P1
-                close(fd[0]);//cierra el descriptor de lectura
-                //envía el saludo por el descriptor de escritura
-                do{
-                    aleat = rand()%3;//genera un destinatario (distinto a sí mismo)
-                }while(aleat == j);
-                //printf("J = %d\tAleat = %d\n",j,aleat);
-                sprintf(dest,"%d",aleat); //convierto el aleat a string
-                strcat(dest,saludo); //concateno el numero de proceso con el mensaje
-                printf("E DE : %d Mensaje = %s\n",j,dest);
-                write(fd[1],dest,strlen(dest));
-                sleep(3);
-                //LEE POR P1
-                close(fd[1]);//Cierra el descritor de escritura
-                nbytes = read(fd[0],readbuffer,sizeof(readbuffer));//lee desde el decriptor de lectura
-                if(nbytes == -1)printf("%d Error al leer mensaje\n",j);
-                else{
-                    strcpy(rb,readbuffer);
-                    printf("RB = %s\n",rb);
-                    key = strtok(readbuffer,delimitador);
-                    x = atoi(key);
-                    if(x == j){
-                        printf("Mensaje recibido por %d! = %s\n",j,rb);
-                    }else{
-                        printf("ED DE : %d Mensaje = %s\n",j,rb);
-                        write(fd[1],rb,strlen(rb));
-                        sleep(3); 
-                    }
-                }
-            }
+            //ESCRIBE POR P1
+            close(fd[0]);//cierra el descriptor de lectura
+            //envía el saludo por el descriptor de escritura
+            do{
+                aleat = rand()%3;//genera un destinatario (distinto a sí mismo)
+            }while(aleat == j);
+            //printf("J = %d\tAleat = %d\n",j,aleat);
+            sprintf(dest,"%d",aleat); //convierto el aleat a string
+            strcat(dest,saludo); //concateno el numero de proceso con el mensaje
+            printf("E DE : %d Mensaje = %s\n",j,dest);
+            write(fd[1],dest,strlen(dest));
+            sleep(3);
+        }else{
+            close(fd[1]);//Cierra el descritor de escritura
+            nbytes = read(fd[0],readbuffer,sizeof(readbuffer));//lee desde el decriptor de lectura 
+            close(fd2[0]); //cierra el descriptor de lectura
+            write(fd2[1],readbuffer,strlen(readbuffer));
+            printf("El padre lee [%d carac] y devuelve el mensaje :%s\n",nbytes,readbuffer);
         }
-        c++;
     } 
     return 0;
 }
