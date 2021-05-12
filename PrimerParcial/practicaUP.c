@@ -11,7 +11,7 @@
 int main(){
     int fd[2],fd2[2],nbytes;
     pid_t proc;
-    char saludo[] = "/Hola. Este es un mensaje-";
+    char saludo[] = "/Hola. Este es un mensaje";
     char readbuffer[80] = " ";
     int c = 0;
 
@@ -72,8 +72,19 @@ int main(){
             close(fd2[1]);//Cierra el descritor de escritura
             strcpy(readbuffer,"");
             nbytes = read(fd2[0],readbuffer,sizeof(readbuffer));//lee desde el decriptor de lectura
-            printf("\t%s",readbuffer);
-            printf("L Hijo %d lee [%d carac] = %s\n",j,nbytes,readbuffer);
+            if(nbytes!=-1){
+                printf("L Hijo %d lee [%d carac] = %s\n",j,nbytes,readbuffer);
+                strcpy(rb,readbuffer);
+                key = strtok(readbuffer,delimitador);
+                x = atoi(key);
+                if(x == j)printf("Mensaje Recibido! %s\n",rb);
+                else{
+                    //DEVOLVER MENSAJE
+                    close(fd2[0]); //cierra el descriptor de lectura
+                    write(fd2[1],rb,strlen(rb));
+                    printf("Mensaje devuelto! %s\n",rb);
+                }
+            }
         }else{
             strcpy(readbuffer,"");
             close(fd[1]);//Cierra el descritor de escritura
