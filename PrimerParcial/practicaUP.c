@@ -57,7 +57,6 @@ int main(){
 
     while(1){
         if(proc == 0){
-            k = rand()%2;
             if(c == 0){
                 //ESCRITURAS INICIALES
                 close(fd[0]);//cierra el descriptor de lectura
@@ -72,6 +71,18 @@ int main(){
                 write(fd[1],dest,strlen(dest));
                 sleep(3);
             }else{
+                //ESCRIBE POR P1
+                close(fd[0]);//cierra el descriptor de lectura
+                //envía el saludo por el descriptor de escritura
+                do{
+                    aleat = rand()%3;//genera un destinatario (distinto a sí mismo)
+                }while(aleat == j);
+                //printf("J = %d\tAleat = %d\n",j,aleat);
+                sprintf(dest,"%d",aleat); //convierto el aleat a string
+                strcat(dest,saludo); //concateno el numero de proceso con el mensaje
+                printf("E DE : %d Mensaje = %s\n",j,dest);
+                write(fd[1],dest,strlen(dest));
+                sleep(3);
                 //LEE POR P1
                 close(fd[1]);//Cierra el descritor de escritura
                 nbytes = read(fd[0],readbuffer,sizeof(readbuffer));//lee desde el decriptor de lectura
@@ -89,18 +100,6 @@ int main(){
                         sleep(3); 
                     }
                 }
-                //ESCRIBE POR P1
-                close(fd[0]);//cierra el descriptor de lectura
-                //envía el saludo por el descriptor de escritura
-                do{
-                    aleat = rand()%3;//genera un destinatario (distinto a sí mismo)
-                }while(aleat == j);
-                //printf("J = %d\tAleat = %d\n",j,aleat);
-                sprintf(dest,"%d",aleat); //convierto el aleat a string
-                strcat(dest,saludo); //concateno el numero de proceso con el mensaje
-                printf("E DE : %d Mensaje = %s\n",j,dest);
-                write(fd[1],dest,strlen(dest));
-                sleep(3);
             }
         }
         c++;
