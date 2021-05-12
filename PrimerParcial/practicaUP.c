@@ -32,7 +32,7 @@ int main(){
 		if(proc <0){
 			printf("Ocurrio un error");
 		}if(proc == 0){//hijo
-			printf("\nSoy el proceso[%i], mi papa es [%i]\n",getpid(),getppid());
+			//printf("\nSoy el proceso[%i], mi papa es [%i]\n",getpid(),getppid());
             j = i;
             break;
         }else{
@@ -60,14 +60,13 @@ int main(){
                 //ESCRIBIR P1
                 close(fd[0]);//cierra el descriptor de lectura
                 //envía el saludo por el descriptor de escritura
-                printf("Hijo %d escribe\n",j);
                 do{
                     aleat = rand()%3;//genera un destinatario (distinto a sí mismo)
                 }while(aleat == j);
                 //printf("J = %d\tAleat = %d\n",j,aleat);
                 sprintf(dest,"%d",aleat); //convierto el aleat a string
                 strcat(dest,saludo); //concateno el pid con el mensaje
-                printf("Mensaje enviado = %s\n",dest);
+                printf("DE : %d Mensaje = %s\n",j,dest);
                 write(fd[1],dest,strlen(dest));
                 sleep(3); 
                 //LEER P2
@@ -91,14 +90,13 @@ int main(){
                 //ESCRIBIR P2
                 close(fd2[0]);//cierra el descriptor de lectura
                 //envía el saludo por el descriptor de escritura
-                printf("Hijo %d escribe\n",j);
                 do{
                     aleat = rand()%3;//genera un destinatario (distinto a sí mismo)
                 }while(aleat == j);
                 //printf("J = %d\tAleat = %d\n",j,aleat);
                 sprintf(dest,"%d",aleat); //convierto el aleat a string
                 strcat(dest,saludo); //concateno el pid con el mensaje
-                printf("Mensaje enviado = %s\n",dest);
+                printf("DE : %d Mensaje = %s\n",j,dest);
                 write(fd2[1],dest,strlen(dest));
                 sleep(3);
                 //LEER P1
