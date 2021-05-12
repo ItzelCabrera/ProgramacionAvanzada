@@ -59,6 +59,18 @@ int main(){
         strcpy(rb,"");
         printf("new rb = %s\n",rb);
         if (proc == 0){
+            //ESCRIBE POR PIPE 1
+            close(fd[0]);//cierra el descriptor de lectura
+            //envía el saludo por el descriptor de escritura
+            do{
+                aleat = rand()%3;//genera un destinatario (distinto a sí mismo)
+            }while(aleat == j);
+            //printf("J = %d\tAleat = %d\n",j,aleat);
+            sprintf(dest,"%d",aleat); //convierto el aleat a string
+            strcat(dest,saludo); //concateno el numero de proceso con el mensaje
+            printf("E1 DE : %d Mensaje = %s\n",j,dest);
+            write(fd[1],dest,strlen(dest));
+            sleep(3);
             //LEE POR PIPE 2
             close(fd2[1]);//Cierra el descritor de escritura
             nbytes = read(fd2[0],readbuffer,sizeof(readbuffer));//lee desde el decriptor de lectura
@@ -80,18 +92,6 @@ int main(){
                     write(fd[1],rb,strlen(rb));
                 }
             }
-            //ESCRIBE POR PIPE 1
-            close(fd[0]);//cierra el descriptor de lectura
-            //envía el saludo por el descriptor de escritura
-            do{
-                aleat = rand()%3;//genera un destinatario (distinto a sí mismo)
-            }while(aleat == j);
-            //printf("J = %d\tAleat = %d\n",j,aleat);
-            sprintf(dest,"%d",aleat); //convierto el aleat a string
-            strcat(dest,saludo); //concateno el numero de proceso con el mensaje
-            printf("E1 DE : %d Mensaje = %s\n",j,dest);
-            write(fd[1],dest,strlen(dest));
-            sleep(3);
         }else{
             //LEE POR PIPE 1
             close(fd[1]);//Cierra el descritor de escritura
