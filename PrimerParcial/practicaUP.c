@@ -73,7 +73,7 @@ int main(){
     return 0;
 }
 
-void LeerP2(char[]readbuffer,int j,int nbytes,char*key,char[]delimitador,int x,int fd2,int fd){
+void LeerP2(char readbuffer,int j,int nbytes,char*key,char delimitador,int x,int fd2,int fd){
     nbytes = read(fd2[0],readbuffer,sizeof(readbuffer));
     printf("Hijo %d lee [%d] carac: %s\n",j,nbytes,readbuffer);
     if(nbytes == -1)printf("No había nada que leer");
@@ -92,7 +92,7 @@ void LeerP2(char[]readbuffer,int j,int nbytes,char*key,char[]delimitador,int x,i
     }
 }
 
-void LeerP1(char[]readbuffer,int j,int nbytes,char*key,char[]delimitador,int x,int fd2,int fd){
+void LeerP1(char readbuffer,int j,int nbytes,char*key,char delimitador,int x,int fd2,int fd){
     nbytes = read(fd[0],readbuffer,sizeof(readbuffer));
     printf("Hijo %d lee [%d] carac: %s\n",j,nbytes,readbuffer);
     if(nbytes == -1)printf("No había nada que leer");
@@ -112,7 +112,7 @@ void LeerP1(char[]readbuffer,int j,int nbytes,char*key,char[]delimitador,int x,i
 
 }
 
-void EscribirP1(int fd,int aleat,int j,char[] dest,char[]saludo){
+void EscribirP1(int fd,int aleat,int j,char dest,char saludo){
     close(fd[0]);//cierra el descriptor de lectura
     //envía el saludo por el descriptor de escritura
     printf("Hijo %d escribe\n",j);
@@ -127,7 +127,7 @@ void EscribirP1(int fd,int aleat,int j,char[] dest,char[]saludo){
     sleep(3); 
 }
 
-void EscribirP2(int fd2,int aleat,int j,char[] dest,char[]saludo){
+void EscribirP2(int fd2,int aleat,int j,char dest,char saludo){
     close(fd2[0]);//cierra el descriptor de lectura
     //envía el saludo por el descriptor de escritura
     printf("Hijo %d escribe\n",j);
