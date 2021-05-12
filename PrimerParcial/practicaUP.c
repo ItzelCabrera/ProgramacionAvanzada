@@ -71,29 +71,10 @@ int main(){
         }else{
             //LEE POR PIPE 1
             close(fd[1]);//Cierra el descritor de escritura
+            close(fd2[0]);//cierra el descriptor de lectura
             nbytes = read(fd[0],readbuffer,sizeof(readbuffer));//lee desde el decriptor de lectura
-            printf("L1 Padre lee [%d] carac: %s\n",nbytes,readbuffer);
-            strcpy(rb,readbuffer);
-            key = strtok(readbuffer,delimitador);
-            printf("\t%s\n",rb);
-            if(key != NULL) printf("Key = %s\n",key);
-            x = atoi(key); //key a integer
-            switch(x){
-                case 0:
-                    printf("Mensaje para el primer hijo\n");
-                    break;
-                case 1:
-                    printf("Mensaje para el segundo hijo\n");
-                    break;
-                case 2:
-                    printf("Mensaje para el tercer hijo\n");
-                    break;
-                default:
-                    printf("Error\n");
-            }
-            //close(fd2[0]);//cierra el descriptor de lectura
-            //printf("Padre reenvia el mensaje\n");//escribe mediante el descriptor de escritura
-            //write(fd2[1],rb,strlen(rb));
+            write(fd2[1],readbuffer,strlen(readbuffer));
+            printf("L1 Padre lee [%d] carac y reenvia: %s\n",nbytes,readbuffer);
         }
     } 
     return 0;
