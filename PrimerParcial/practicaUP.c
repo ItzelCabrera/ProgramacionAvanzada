@@ -73,6 +73,10 @@ int main(){
                 printf("E1 DE : %d Mensaje = %s\n",j,dest);
                 write(fd[1],dest,strlen(dest));
                 sleep(3); 
+                strcpy(dest," "); //vacio el string que se manda como mensaje
+                strcpy(readbuffer," "); //vacio el string de lectura
+                strcpy(rb," ");
+                fflush(stdin);
                 //LEER P2
                 nbytes = read(fd2[0],readbuffer,sizeof(readbuffer));
                 printf("L2 Hijo %d lee [%d] carac: %s\n",j,nbytes,readbuffer);
@@ -105,6 +109,10 @@ int main(){
                 printf("E2 DE : %d Mensaje = %s\n",j,dest);
                 write(fd2[1],dest,strlen(dest));
                 sleep(3);
+                strcpy(dest," "); //vacio el string que se manda como mensaje
+                strcpy(readbuffer," "); //vacio el string de lectura
+                strcpy(rb," ");
+                fflush(stdin);
                 //LEER P1
                 nbytes = read(fd[0],readbuffer,sizeof(readbuffer));
                 printf("L1 Hijo %d lee [%d] carac: %s\n",j,nbytes,readbuffer);
