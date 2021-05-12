@@ -103,6 +103,7 @@ int main(){
             printf("L1 Padre lee [%d] carac: %s\n",nbytes,readbuffer);
             mssg = strtok(readbuffer,delimitador2);
             while(mssg != NULL){
+                printf("\t%s",mssg);
                 strcpy(rb,mssg);
                 printf(" rb = %s\n",rb);
                 key = strtok(mssg,delimitador2);
