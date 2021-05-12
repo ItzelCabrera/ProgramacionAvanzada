@@ -56,7 +56,7 @@ int main(){
     int k = 0;
 
     while(1){
-        strcpy(readbuffer,"");
+        strcpy(readbuffer,"\0");
         if(proc == 0){
             //ESCRIBE POR P1
             close(fd[0]);//cierra el descriptor de lectura
