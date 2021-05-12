@@ -93,7 +93,7 @@ int main(){
                     else{
                         strcpy(rb,readbuffer);
                         printf("RB = %s\n",rb);
-                        key = strtoken(readbuffer,delimitador);
+                        key = strtok(readbuffer,delimitador);
                         x = atoi(key);
                         if(x == j){
                             printf("Mensaje recibido por %d! = %s\n",j,rb);
