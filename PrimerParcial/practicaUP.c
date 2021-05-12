@@ -11,8 +11,8 @@
 int main(){
     int fd[2],fd2[2],nbytes;
     pid_t proc;
-    char saludo[] = "\tHola. Este es un mensaje";
-    char respuesta[] = "\tHola. Esta es una respuesta";
+    char saludo[] = "\tHola. Este es un mensaje-";
+    char respuesta[] = "\tHola. Esta es una respuesta-";
     char readbuffer[80] = " ";
 
     //CREAN TUBERÍAS
@@ -49,10 +49,13 @@ int main(){
     
     char dest [40] = " ";
     char delimitador [] = "\t";
+    char delimitador2[2] = "-";
     char *key;
     int aleat = 0;
     int x = 0;
     char rb[80] = " ";
+    char *mssg;
+
     while(1){
         //strcpy(readbuffer,"");
         //printf("new readbuffer = %s\n",readbuffer);
@@ -98,29 +101,33 @@ int main(){
             close(fd[1]);//Cierra el descritor de escritura
             nbytes = read(fd[0],readbuffer,sizeof(readbuffer));//lee desde el decriptor de lectura
             printf("L1 Padre lee [%d] carac: %s\n",nbytes,readbuffer);
-            strcpy(rb,readbuffer);
-            printf(" rb = %s\n",rb);
-            key = strtok(readbuffer,delimitador);
-            if(key != NULL) printf("Key = %s\n",key);
-            x = atoi(key); //key a integer
-            switch(x){
-                case 0:
-                    printf("Mensaje para el primer hijo\n");
-                    break;
-                case 1:
-                    printf("Mensaje para el segundo hijo\n");
-                    break;
-                case 2:
-                    printf("Mensaje para el tercer hijo\n");
-                    break;
-                default:
-                    printf("Error\n");
-            }
-            //DEVUELVE EL MENSAJE POR PIPE2
-            close(fd2[0]);//cierra el descriptor de lectura
-            printf("Padre DEVUELVE el mensaje = %s\n",rb);//escribe mediante el descriptor de escritura
-            write(fd2[1],rb,strlen(rb));  
-            sleep(3); 
+            mssg = strtok(readbuffer,delimitador2);
+            while(mssg != NULL){
+                strcpy(rb,mssg);
+                printf(" rb = %s\n",rb);
+                key = strtok(mssg,delimitador2);
+                if(key != NULL) printf("Key = %s\n",key);
+                x = atoi(key); //key a integer
+                switch(x){
+                    case 0:
+                        printf("Mensaje para el primer hijo\n");
+                        break;
+                    case 1:
+                        printf("Mensaje para el segundo hijo\n");
+                        break;
+                    case 2:
+                        printf("Mensaje para el tercer hijo\n");
+                        break;
+                    default:
+                        printf("Error\n");
+                }
+                //DEVUELVE EL MENSAJE POR PIPE2
+                close(fd2[0]);//cierra el descriptor de lectura
+                printf("Padre DEVUELVE el mensaje = %s\n",rb);//escribe mediante el descriptor de escritura
+                write(fd2[1],rb,strlen(rb));  
+                sleep(3);
+                mssg = strtok(NULL,delimitador2);
+            } 
         }
     } 
     return 0;
