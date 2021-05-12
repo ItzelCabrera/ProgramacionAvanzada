@@ -55,6 +55,7 @@ int main(){
 
     while(1){
         strcpy(dest,""); //vacio el string que se manda como mensaje
+        strcpy(readbuffer,""); //vacio el string de lectura
         if (proc == 0){
             if(j%2 == 0){
                 //ESCRIBIR P1
