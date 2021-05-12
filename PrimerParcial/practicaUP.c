@@ -57,6 +57,7 @@ int main(){
 
     while(1){
         if(proc == 0){
+            k = rand()%2;
             if(c == 0){
                 //ESCRITURAS INICIALES
                 close(fd[0]);//cierra el descriptor de lectura
@@ -71,7 +72,6 @@ int main(){
                 write(fd[1],dest,strlen(dest));
                 sleep(3);
             }else{
-               k = rand()%2;
                if(k == 0){
                    //ESCRIBE POR P1
                    close(fd[0]);//cierra el descriptor de lectura
