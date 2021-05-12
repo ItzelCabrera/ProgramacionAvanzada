@@ -57,9 +57,9 @@ int main(){
     char *mssg;
 
     while(1){
-        //strcpy(readbuffer,"");
+        strcpy(readbuffer,"");
         //printf("new readbuffer = %s\n",readbuffer);
-        //strcpy(rb,"");
+        strcpy(rb,"");
         //printf("new rb = %s\n",rb);
         fflush(stdin);
         if (proc == 0){
