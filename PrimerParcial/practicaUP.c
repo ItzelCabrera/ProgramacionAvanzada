@@ -78,6 +78,7 @@ int main(){
                 strcpy(rb," ");
                 fflush(stdin);
                 //LEER P2
+                close(fd2[1]);
                 nbytes = read(fd2[0],readbuffer,sizeof(readbuffer));
                 printf("L2 Hijo %d lee [%d] carac: %s\n",j,nbytes,readbuffer);
                 if(nbytes == -1)printf("No había nada que leer");
@@ -114,6 +115,7 @@ int main(){
                 strcpy(rb," ");
                 fflush(stdin);
                 //LEER P1
+                close(fd[1]);
                 nbytes = read(fd[0],readbuffer,sizeof(readbuffer));
                 printf("L1 Hijo %d lee [%d] carac: %s\n",j,nbytes,readbuffer);
                 if(nbytes == -1)printf("No había nada que leer");
