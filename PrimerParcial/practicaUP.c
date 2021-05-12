@@ -68,6 +68,7 @@ int main(){
             strcat(dest,saludo); //concateno el numero de proceso con el mensaje
             printf("DE : %d Mensaje = %s\n",j,dest);
             write(fd[1],dest,strlen(dest));
+            slee(3);
             //LEE POR P2
             close(fd2[1]);//Cierra el descritor de escritura
             strcpy(readbuffer,"");
