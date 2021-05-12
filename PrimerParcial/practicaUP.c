@@ -52,11 +52,13 @@ int main(){
     char *key;
     int aleat = 0;
     int x = 0;
+    char rb [80] = " ";
 
     while(1){
         if (proc == 0){
             strcpy(dest," "); //vacio el string que se manda como mensaje
             strcpy(readbuffer," "); //vacio el string de lectura
+            strcpy(rb," ");
             fflush(stdin);
             if(j%2 == 0){
                 //ESCRIBIR P1
@@ -76,6 +78,7 @@ int main(){
                 printf("L2 Hijo %d lee [%d] carac: %s\n",j,nbytes,readbuffer);
                 if(nbytes == -1)printf("No había nada que leer");
                 else{
+                    strcpy(rb,readbuffer);
                     key = strtok(readbuffer,delimitador);//separa el destinatario
                     x = atoi(key); //key a integer
                     if(key != NULL) printf("Key = %s\n",key); 
@@ -83,10 +86,10 @@ int main(){
                     else {//Devuelve el mensaje en p1
                         close(fd[0]);//cierra el descriptor de lectura
                         //envía el saludo por el descriptor de escritura
-                        printf("RB: %s\n",readbuffer);
+                        printf("RB: %s\n",rb);
                         printf("Hijo %d DEVUELVE el mensaje\n",j);
-                        printf("Mensaje DEVUELTO = %s\n",readbuffer);
-                        write(fd[1],readbuffer,strlen(readbuffer));         
+                        printf("Mensaje DEVUELTO = %s\n",rb);
+                        write(fd[1],rb,strlen(rb));         
                     }              
                 }
             }else{
@@ -107,6 +110,7 @@ int main(){
                 printf("L1 Hijo %d lee [%d] carac: %s\n",j,nbytes,readbuffer);
                 if(nbytes == -1)printf("No había nada que leer");
                 else{
+                    strcpy(rb,readbuffer);
                     key = strtok(readbuffer,delimitador);//separa el destinatario
                     x = atoi(key); //key a integer
                     if(key != NULL) printf("Key = %s\n",key); 
@@ -114,9 +118,10 @@ int main(){
                     else {//Devuelve el mensaje en p2
                         close(fd2[0]);//cierra el descriptor de lectura
                         //envía el saludo por el descriptor de escritura
+                        printf("RB: %s\n",rb);
                         printf("Hijo %d DEVUELVE el mensaje\n",j);
-                        printf("Mensaje DEVUELTO = %s\n",readbuffer);
-                        write(fd2[1],readbuffer,strlen(readbuffer));         
+                        printf("Mensaje DEVUELTO = %s\n",rb);
+                        write(fd2[1],rb,strlen(rb));         
                     }              
                 }
             }
