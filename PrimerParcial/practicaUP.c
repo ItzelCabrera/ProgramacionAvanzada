@@ -91,9 +91,9 @@ int main(){
                 default:
                     printf("Error\n");
             }
-            close(fd2[0]);//cierra el descriptor de lectura
-            printf("Padre reenvia el mensaje\n");//escribe mediante el descriptor de escritura
-            write(fd2[1],rb,strlen(rb));
+            //close(fd2[0]);//cierra el descriptor de lectura
+            //printf("Padre reenvia el mensaje\n");//escribe mediante el descriptor de escritura
+            //write(fd2[1],rb,strlen(rb));
         }
     } 
     return 0;
