@@ -80,8 +80,8 @@ int main(){
                 if(x == j)printf("Mensaje Recibido! %s\n",rb);
                 else{
                     //DEVOLVER MENSAJE
-                    close(fd2[0]); //cierra el descriptor de lectura
-                    write(fd2[1],rb,strlen(rb));
+                    close(fd[0]); //cierra el descriptor de lectura
+                    write(fd[1],rb,strlen(rb));
                     printf("Mensaje devuelto! %s\n",rb);
                 }
             }
