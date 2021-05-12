@@ -66,25 +66,13 @@ int main(){
             //printf("J = %d\tAleat = %d\n",j,aleat);
             sprintf(dest,"%d",aleat); //convierto el aleat a string
             strcat(dest,saludo); //concateno el numero de proceso con el mensaje
-            printf("E DE : %d Mensaje = %s\n",j,dest);
+            printf("DE : %d Mensaje = %s\n",j,dest);
             write(fd[1],dest,strlen(dest));
             //LEE POR P2
             close(fd2[1]);//Cierra el descritor de escritura
             strcpy(readbuffer,"");
             nbytes = read(fd2[0],readbuffer,sizeof(readbuffer));//lee desde el decriptor de lectura
-            if(nbytes!=-1){
-                printf("L Hijo %d lee [%d carac] = %s\n",j,nbytes,readbuffer);
-                strcpy(rb,readbuffer);
-                key = strtok(readbuffer,delimitador);
-                x = atoi(key);
-                if(x == j)printf("Mensaje Recibido! %s\n",rb);
-                //else{
-                    //DEVOLVER MENSAJE
-                //    close(fd[0]); //cierra el descriptor de lectura
-                //    write(fd[1],rb,strlen(rb));
-                //    printf("Mensaje devuelto! %s\n",rb);
-                //}
-            }
+            printf("Hijo %d lee [%d carac] = %s\n",j,nbytes,readbuffer);
         }else{
             strcpy(readbuffer,"");
             close(fd[1]);//Cierra el descritor de escritura
