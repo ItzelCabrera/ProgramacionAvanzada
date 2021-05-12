@@ -56,6 +56,7 @@ int main(){
     int k = 0;
 
     while(1){
+        strcpy(readbuffer,"");
         if(proc == 0){
             if(c == 0){
                 //ESCRITURAS INICIALES
