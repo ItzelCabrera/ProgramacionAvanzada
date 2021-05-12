@@ -83,6 +83,7 @@ int main(){
                     else {//Devuelve el mensaje en p1
                         close(fd[0]);//cierra el descriptor de lectura
                         //envía el saludo por el descriptor de escritura
+                        printf("RB: %s\n",readbuffer);
                         printf("Hijo %d DEVUELVE el mensaje\n",j);
                         printf("Mensaje DEVUELTO = %s\n",readbuffer);
                         write(fd[1],readbuffer,strlen(readbuffer));         
