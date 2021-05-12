@@ -11,8 +11,8 @@
 int main(){
     int fd[2],fd2[2],nbytes;
     pid_t proc;
-    char saludo[] = "\tHola. Este es un mensaje-";
-    char respuesta[] = "\tHola. Esta es una respuesta-";
+    char saludo[] = "/Hola. Este es un mensaje-";
+    char respuesta[] = "/Hola. Esta es una respuesta-";
     char readbuffer[80] = " ";
 
     //CREAN TUBERÍAS
@@ -48,7 +48,7 @@ int main(){
     //if (j == 3)printf("Soy el padre : %d\n",getpid());
     
     char dest [40] = " ";
-    char delimitador [] = "\t";
+    char delimitador [2] = "/";
     char delimitador2[2] = "-";
     char *key;
     int aleat = 0;
