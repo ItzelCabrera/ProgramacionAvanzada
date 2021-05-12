@@ -72,6 +72,7 @@ int main(){
             close(fd2[1]);//Cierra el descritor de escritura
             strcpy(readbuffer,"");
             nbytes = read(fd2[0],readbuffer,sizeof(readbuffer));//lee desde el decriptor de lectura
+            printf("\t%s",readbuffer);
             printf("L Hijo %d lee [%d carac] = %s\n",j,nbytes,readbuffer);
         }else{
             strcpy(readbuffer,"");
