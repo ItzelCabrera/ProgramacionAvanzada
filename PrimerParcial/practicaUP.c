@@ -70,6 +70,10 @@ int main(){
             printf("E DE : %d Mensaje = %s\n",j,dest);
             write(fd[1],dest,strlen(dest));
             sleep(3);
+            //LEE POR P2
+            close(fd2[1]);//Cierra el descritor de escritura
+            nbytes = read(fd2[0],readbuffer,sizeof(readbuffer));//lee desde el decriptor de lectura
+            printf("L Hijo %d lee [%d carac] = %s\n",j,nbytes,readbuffer);
         }else{
             close(fd[1]);//Cierra el descritor de escritura
             nbytes = read(fd[0],readbuffer,sizeof(readbuffer));//lee desde el decriptor de lectura 
