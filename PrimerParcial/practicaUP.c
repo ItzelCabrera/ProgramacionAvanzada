@@ -56,7 +56,7 @@ int main(){
     int k = 0;
 
     while(1){
-        strcpy(readbuffer,"\0");
+        strcpy(readbuffer,"");
         if(proc == 0){
             //ESCRIBE POR P1
             close(fd[0]);//cierra el descriptor de lectura
@@ -69,7 +69,6 @@ int main(){
             strcat(dest,saludo); //concateno el numero de proceso con el mensaje
             printf("E DE : %d Mensaje = %s\n",j,dest);
             write(fd[1],dest,strlen(dest));
-            sleep(3);
             //LEE POR P2
             close(fd2[1]);//Cierra el descritor de escritura
             nbytes = read(fd2[0],readbuffer,sizeof(readbuffer));//lee desde el decriptor de lectura
