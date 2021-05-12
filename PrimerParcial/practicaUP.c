@@ -56,6 +56,7 @@ int main(){
 
     while(1){
         if(proc == 0){
+            printf("entra hijo\n");
             //ESCRIBE POR PIPE 1
             close(fd[0]);//cierra el descriptor de lectura
             //envía el saludo por el descriptor de escritura
@@ -69,6 +70,7 @@ int main(){
             write(fd[1],dest,strlen(dest));
             sleep(3);
         }else{
+            printf("entra padre\n");
             //LEE POR PIPE 1
             close(fd[1]);//Cierra el descritor de escritura
             nbytes = read(fd[0],readbuffer,sizeof(readbuffer));//lee desde el decriptor de lectura
