@@ -56,6 +56,7 @@ int main(){
     int k = 0;
 
     while(1){
+        fflush(stdin);
         if(proc == 0){
             //ESCRIBE POR P1
             close(fd[0]);//cierra el descriptor de lectura
@@ -71,12 +72,10 @@ int main(){
             //LEE POR P2
             close(fd2[1]);//Cierra el descritor de escritura
             strcpy(readbuffer,"");
-            fflush(stdin);
             nbytes = read(fd2[0],readbuffer,sizeof(readbuffer));//lee desde el decriptor de lectura
             printf("L Hijo %d lee [%d carac] = %s\n",j,nbytes,readbuffer);
         }else{
             strcpy(readbuffer,"");
-            fflush(stdin);
             close(fd[1]);//Cierra el descritor de escritura
             nbytes = read(fd[0],readbuffer,sizeof(readbuffer));//lee desde el decriptor de lectura 
             close(fd2[0]); //cierra el descriptor de lectura
