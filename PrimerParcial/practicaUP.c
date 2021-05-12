@@ -8,10 +8,10 @@
 #include <semaphore.h>
 #define NH 3
 
-void LeerP1(char[]readbuffer,int j,int nbytes,char*key,char[]delimitador,int x,int fd2,int fd);
-void LeerP2(char[]readbuffer,int j,int nbytes,char*key,char[]delimitador,int x,int fd2,int fd);
-void EscribirP1(int fd,int aleat,int j,char[] dest,char[]saludo);
-void EscribirP2(int fd2,int aleat,int j,char[] dest,char[]saludo);
+void LeerP1(char readbuffer,int j,int nbytes,char*key,char delimitador,int x,int fd2,int fd);
+void LeerP2(char readbuffer,int j,int nbytes,char*key,char delimitador,int x,int fd2,int fd);
+void EscribirP1(int fd,int aleat,int j,char dest,char saludo);
+void EscribirP2(int fd2,int aleat,int j,char dest,char saludo);
 
 int main(){
     int fd[2],fd2[2],nbytes;
