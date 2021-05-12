@@ -78,12 +78,12 @@ int main(){
                 key = strtok(readbuffer,delimitador);
                 x = atoi(key);
                 if(x == j)printf("Mensaje Recibido! %s\n",rb);
-                else{
+                //else{
                     //DEVOLVER MENSAJE
-                    close(fd[0]); //cierra el descriptor de lectura
-                    write(fd[1],rb,strlen(rb));
-                    printf("Mensaje devuelto! %s\n",rb);
-                }
+                //    close(fd[0]); //cierra el descriptor de lectura
+                //    write(fd[1],rb,strlen(rb));
+                //    printf("Mensaje devuelto! %s\n",rb);
+                //}
             }
         }else{
             strcpy(readbuffer,"");
