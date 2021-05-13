@@ -21,7 +21,7 @@ int main(){
         printf("Codigo HIJO 1\n");
         fifo1 = open(pipe1Nombre,O_WRONLY);
         strcpy(mssg,"ENVIANDO");
-        printf("H1 manda : %S\n",mssg);
+        printf("H1 manda : %s\n",mssg);
         write(fifo1,mssg,strlen(mssg)+1);
         close(fifo1);
         exit(0);
@@ -30,7 +30,7 @@ int main(){
         printf("Codigo HIJO 1\n");
         fifo1 = open(pipe1Nombre,O_RDONLY);
         read(fifo1,mssg,MAX);
-        printf("H2 recibe : %S\n",mssg);
+        printf("H2 recibe : %s\n",mssg);
         close(fifo1);
         exit(0);
     }else{
