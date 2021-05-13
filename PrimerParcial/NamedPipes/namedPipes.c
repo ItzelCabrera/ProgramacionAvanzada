@@ -27,7 +27,7 @@ int main(){
         exit(0);
     }
     if((pid = fork())==0){
-        printf("Codigo HIJO 1\n");
+        printf("Codigo HIJO 2\n");
         fifo1 = open(pipe1Nombre,O_RDONLY);
         read(fifo1,mssg,MAX);
         printf("H2 recibe : %s\n",mssg);
@@ -35,5 +35,6 @@ int main(){
         exit(0);
     }else{
         printf("Soy el padre\n");
+        wait(&pid);
     }
 }
