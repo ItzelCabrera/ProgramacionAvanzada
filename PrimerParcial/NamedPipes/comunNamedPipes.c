@@ -15,7 +15,7 @@ Programa que comunica dos procesos donde uno escribe y otro lee
 
 int main(){
     int pid,*edo;
-    char pipe1Nombre[MAX] = "newFIFO";//id de la tubería
+    char pipe1Nombre[MAX] = "FIFO";//id de la tubería
     char mssg [MAX]= " ";
     int fifo1;
     
@@ -32,6 +32,9 @@ int main(){
             write(fifo1,mssg,strlen(mssg)+1);
             close(fifo1);
             exit(0);
+        }else{
+            printf("Soy el padre\n");
+            wait(&pid);
         }
     }else{
         pid = fork();
@@ -43,9 +46,10 @@ int main(){
             close(fifo1);
             exit(0);
         }
+        else{
+            printf("Soy el padre\n");
+            wait(&pid);
+        }
     }
-    if(pid>0){
-        printf("Soy el padre\n");
-        wait(&pid);
-    }
+    retun 0;
 }

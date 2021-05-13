@@ -37,4 +37,5 @@ int main(){
         printf("Soy el padre\n");
         wait(&pid);
     }
+    return 0;
 }
