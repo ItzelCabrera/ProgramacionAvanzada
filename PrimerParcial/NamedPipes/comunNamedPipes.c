@@ -51,5 +51,5 @@ int main(){
             wait(&pid);
         }
     }
-    retun 0;
+    return 0;
 }
