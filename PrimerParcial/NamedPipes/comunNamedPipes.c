@@ -15,7 +15,7 @@ Programa que comunica dos procesos donde uno escribe y otro lee
 
 int main(){
     int pid,*edo;
-    char pipe1Nombre[MAX] = "FIFO";//id de la tubería
+    char pipe1Nombre[MAX] = "fifo";//id de la tubería
     char mssg [MAX]= " ";
     int fifo1;
     
