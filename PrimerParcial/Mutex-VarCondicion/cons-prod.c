@@ -1,5 +1,5 @@
 //Cabrera Vazquez Itzel Berenice 2020640576
-
+//Programa de cons-productor mediante mutex y variables de condicion
 #include<stdio.h>
 #include<stdlib.h>
 #include<unistd.h>

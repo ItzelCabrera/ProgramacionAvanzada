@@ -1,3 +1,4 @@
+/*Practica: existe una estetica con 2 empleados que cortan el pelo, 2 que lo pintan, 1 que hace manicure y otro que hace pedicure. En las estetica se pueden atender a 5 personas al mismo tiempo. */
 #include<stdio.h>
 #include<stdlib.h>
 #include<unistd.h>

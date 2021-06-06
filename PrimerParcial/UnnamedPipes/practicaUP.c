@@ -1,4 +1,5 @@
 //ITZEL BERENICE CABRERA VAZQUEZ        PROGRAMACION AVANZADA 
+//Programa que comunica procesos mediante tuberías sin nombre
 #include<stdio.h>
 #include<unistd.h>
 #include<sys/types.h>

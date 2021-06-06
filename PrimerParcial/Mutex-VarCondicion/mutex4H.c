@@ -1,5 +1,5 @@
 //Cabrera Vazquez Itzel Berenice 2020640576
-
+//Programa de operaciones aritmeticas protegiendo con MUTEX
 #include<stdio.h>
 #include<stdlib.h>
 #include<unistd.h>

@@ -1,4 +1,5 @@
 //Cabrera Vazquez Itzel Berenice 2020640576
+//Programa de consumidor-productor mediante semaforos
 
 #include<stdio.h>
 #include<stdlib.h>

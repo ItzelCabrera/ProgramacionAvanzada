@@ -1,3 +1,4 @@
+//Hilos que realizan funciones diferentes (suma,resta.multiplicacion y division)
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>

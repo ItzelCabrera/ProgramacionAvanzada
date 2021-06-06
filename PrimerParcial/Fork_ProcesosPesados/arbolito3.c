@@ -9,7 +9,7 @@ int main(){
 
 	pid_t proc;
 	
-	//FOR 2: crea mi arbol correcto
+	//FOR 2: crea mi arbol de un solo nivel
 	for(int i = 0; i<3;i++){
 		proc = fork();
 		if(proc <0){

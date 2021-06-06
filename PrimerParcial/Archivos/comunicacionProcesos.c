@@ -1,3 +1,4 @@
+//Programa para comunicar procesos mediante archivs txt
 #include<stdio.h>
 #include<stdlib.h>
 #include<unistd.h>

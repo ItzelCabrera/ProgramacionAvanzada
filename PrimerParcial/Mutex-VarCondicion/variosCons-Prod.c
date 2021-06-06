@@ -1,5 +1,5 @@
 //Cabrera Vazquez Itzel Berenice 2020640576
-
+//Programa de 4 consumidores y 3 productores, mediante el uso de mutex y variables de condicion
 #include<stdio.h>
 #include<stdlib.h>
 #include<unistd.h>

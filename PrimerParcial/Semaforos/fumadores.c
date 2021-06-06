@@ -1,5 +1,5 @@
 //Cabrera Vazquez Itzel Berenice 2020640576
-
+//Mediante el uso de semaforos, se permite que tres tipos fumen mota
 #include<stdio.h>
 #include<stdlib.h>
 #include<unistd.h>
